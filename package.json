@@ -1,0 +1,36 @@
+{
+  "name": "pax",
+  "description": "Curry your path segments with intelligent escaping. Tiny.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/jchris/pax",
+  "author": {
+    "name": "Chris Anderson",
+    "email": "jchris@couchbase.com",
+    "url": "http://www.couchbase.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jchris/pax.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jchris/pax/issues"
+  },
+  "licenses": [
+    {
+      "type": "APL",
+      "url": "https://github.com/jchris/pax/blob/master/LICENSE-APL"
+    }
+  ],
+  "main": "lib/pax",
+  "engines": {
+    "node": "~0.8.16"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.3.6"
+  },
+  "keywords": []
+}
