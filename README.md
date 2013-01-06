@@ -1,6 +1,6 @@
 # pax
 
-Curry your path segments with intelligent escaping. Tiny. Used by `coux`, hopefully
+Curry your path segments with intelligent escaping. Tiny. Used by `hoax`, hopefully
 
 ## Getting Started
 Install the module with: `npm install pax`
