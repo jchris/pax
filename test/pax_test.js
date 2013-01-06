@@ -67,8 +67,9 @@ exports['custom getQuery handler'] = {
     done();
   },
   'is stringable': function(test) {
-    test.expect(2);
+    test.expect(3);
     // tests here
+    test.equal(pax("http://localhost:5984/test-pax").toString(), 'http://localhost:5984/test-pax', 'should be normal.');
     test.equal(db.toString(), 'http://localhost:5984/test-pax?myKey=valuable&foobar=true', 'should be custom.');
     test.equal(doc.toString(), 'http://localhost:5984/test-pax?myKey=valuable&more=data&foobar=true', 'should be curried.');
     test.done();
