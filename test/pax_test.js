@@ -93,7 +93,7 @@ exports['global getQuery handler'] = {
     // tests here
     test.equal(db.toString(), 'http://localhost:5984/test-pax?myKey=valuable&global=true', 'should be custom.');
     test.equal(doc.toString(), 'http://localhost:5984/test-pax?myKey=valuable&more=data&global=true', 'should be curried.');
-    delete pax.getQuery;
+    pax.getQuery = false;
     test.done();
   }
 };
