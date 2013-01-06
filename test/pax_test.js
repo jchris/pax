@@ -28,12 +28,27 @@ exports['can curry params'] = {
   'is stringable': function(test) {
     test.expect(2);
     // tests here
-    test.equal(db.toString(), 'http://localhost:5984/test-pax?myKey=valuable&more=data', 'should be awesome.');
+    test.equal(db.toString(), 'http://localhost:5984/test-pax?myKey=valuable', 'should be immutable.');
     test.equal(doc.toString(), 'http://localhost:5984/test-pax/my-doc?myKey=valuable&more=data', 'should be awesome.');
     test.done();
   }
 };
 
+exports['can curry only params'] = {
+  setUp: function(done) {
+    // setup here
+    db = pax(["http://localhost:5984","test-pax", {myKey : "valuable"}]);
+    doc = db({more : "data"});
+    done();
+  },
+  'is stringable': function(test) {
+    test.expect(2);
+    // tests here
+    test.equal(db.toString(), 'http://localhost:5984/test-pax?myKey=valuable', 'should be immutable.');
+    test.equal(doc.toString(), 'http://localhost:5984/test-pax?myKey=valuable&more=data', 'should be awesome.');
+    test.done();
+  }
+};
 
 exports['with encodings'] = {
   setUp: function(done) {
@@ -62,7 +77,7 @@ exports['dirty input'] = {
   'is stringable': function(test) {
     test.expect(2);
     // tests here
-    test.equal(db.toString(), 'http://localhost:5984/test-pax?myKey=valuable&more=data', 'should be awesome.');
+    test.equal(db.toString(), 'http://localhost:5984/test-pax?myKey=valuable', 'should be awesome.');
     test.equal(doc.toString(), 'http://localhost:5984/test-pax/my-doc?myKey=valuable&more=data', 'should be awesome.');
     test.done();
   }
