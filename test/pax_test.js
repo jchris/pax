@@ -50,6 +50,54 @@ exports['can curry only params'] = {
   }
 };
 
+
+exports['custom getQuery handler'] = {
+  setUp: function(done) {
+    // setup here
+
+    db = pax(["http://localhost:5984","test-pax", {myKey : "valuable"}]);
+
+    db.getQuery = function(params) {
+      params.foobar = "true";
+      return params;
+    };
+
+    doc = db({more : "data"});
+
+    done();
+  },
+  'is stringable': function(test) {
+    test.expect(2);
+    // tests here
+    test.equal(db.toString(), 'http://localhost:5984/test-pax?myKey=valuable&foobar=true', 'should be custom.');
+    test.equal(doc.toString(), 'http://localhost:5984/test-pax?myKey=valuable&more=data&foobar=true', 'should be curried.');
+    test.done();
+  }
+};
+
+exports['global getQuery handler'] = {
+  setUp: function(done) {
+    // setup here
+    pax.getQuery = function(q) {
+      q.global = true;
+      return q;
+    };
+    db = pax(["http://localhost:5984","test-pax", {myKey : "valuable"}]);
+    doc = db({more : "data"});
+
+    done();
+  },
+  'is stringable': function(test) {
+    test.expect(2);
+    // tests here
+    test.equal(db.toString(), 'http://localhost:5984/test-pax?myKey=valuable&global=true', 'should be custom.');
+    test.equal(doc.toString(), 'http://localhost:5984/test-pax?myKey=valuable&more=data&global=true', 'should be curried.');
+    delete pax.getQuery;
+    test.done();
+  }
+};
+
+
 exports['with encodings'] = {
   setUp: function(done) {
     // setup here
