@@ -31,6 +31,11 @@ exports['can curry params'] = {
     test.equal(db.toString(), 'http://localhost:5984/test-pax?myKey=valuable', 'should be immutable.');
     test.equal(doc.toString(), 'http://localhost:5984/test-pax/my-doc?myKey=valuable&more=data', 'should be awesome.');
     test.done();
+  },
+  'numbers and true/false' : function(test) {
+    var ps = doc({stuff : true, hmm : false, when : 3});
+    test.equal(ps.toString(), 'http://localhost:5984/test-pax/my-doc?myKey=valuable&more=data&stuff=true&hmm=false&when=3');
+    test.done();
   }
 };
 
