@@ -1,4 +1,7 @@
-var pax = require('../lib/pax.js');
+var pax = require('../lib/pax.js'),
+  qs = require("querystring").parse,
+  us = require("url").parse,
+  ps = function(s){return qs(us(s).query);};
 
 
 var db, doc;
@@ -26,15 +29,17 @@ exports['can curry params'] = {
     done();
   },
   'is stringable': function(test) {
-    test.expect(2);
+    test.expect(4);
     // tests here
     test.equal(db.toString(), 'http://localhost:5984/test-pax?myKey=valuable', 'should be immutable.');
-    test.equal(doc.toString(), 'http://localhost:5984/test-pax/my-doc?myKey=valuable&more=data', 'should be awesome.');
+    test.equal(ps(db.toString()).myKey, 'valuable');
+    test.equal(ps(doc.toString()).myKey, 'valuable');
+    test.equal(ps(doc.toString()).more, 'data');
     test.done();
   },
   'numbers and true/false' : function(test) {
-    var ps = doc({stuff : true, hmm : false, when : 3});
-    test.equal(ps.toString(), 'http://localhost:5984/test-pax/my-doc?myKey=valuable&more=data&stuff=true&hmm=false&when=3');
+    var ps = doc({stuff : true, hmm : false, when : 0});
+    test.equal(ps.toString(), 'http://localhost:5984/test-pax/my-doc?myKey=valuable&more=data&stuff=true&hmm=false&when=0');
     test.done();
   }
 };
@@ -47,10 +52,11 @@ exports['can curry only params'] = {
     done();
   },
   'is stringable': function(test) {
-    test.expect(2);
+    test.expect(3);
     // tests here
-    test.equal(db.toString(), 'http://localhost:5984/test-pax?myKey=valuable', 'should be immutable.');
-    test.equal(doc.toString(), 'http://localhost:5984/test-pax?myKey=valuable&more=data', 'should be awesome.');
+    test.equal(ps(db.toString()).myKey, 'valuable');
+    test.equal(ps(doc.toString()).myKey, 'valuable');
+    test.equal(ps(doc.toString()).more, 'data');
     test.done();
   }
 };
@@ -94,10 +100,12 @@ exports['global getQuery handler'] = {
     done();
   },
   'is stringable': function(test) {
-    test.expect(2);
+    test.expect(4);
     // tests here
-    test.equal(db.toString(), 'http://localhost:5984/test-pax?myKey=valuable&global=true', 'should be custom.');
-    test.equal(doc.toString(), 'http://localhost:5984/test-pax?myKey=valuable&more=data&global=true', 'should be curried.');
+    test.equal(ps(db.toString()).myKey, 'valuable');
+    test.equal(ps(doc.toString()).myKey, 'valuable');
+    test.equal(ps(doc.toString()).more, 'data');
+    test.equal(ps(doc.toString()).global, 'true');
     pax.getQuery = false;
     test.done();
   }
